@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane prefHeight="139.0" prefWidth="452.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.imperial2metric.Controller">
+   <center>
+      <VBox prefHeight="68.0" prefWidth="310.0">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="345.0">
+               <children>
+                  <TextField fx:id="ft" onKeyReleased="#recalc" prefHeight="25.0" prefWidth="40.0">
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ft" />
+                  <TextField fx:id="in" onKeyReleased="#recalc" prefHeight="25.0" prefWidth="40.0">
+                     <HBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="in" />
+                  <TextField fx:id="numerator" onKeyReleased="#recalc" prefHeight="25.0" prefWidth="40.0">
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="/">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
+                  </Text>
+                  <TextField fx:id="denominator" onKeyReleased="#recalc" prefHeight="25.0" prefWidth="40.0">
+                     <HBox.margin>
+                        <Insets left="3.0" right="5.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="fraction" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1:">
+                     <HBox.margin>
+                        <Insets right="2.0" />
+                     </HBox.margin>
+                  </Text>
+                  <TextField fx:id="scale" onKeyReleased="#recalc" prefHeight="25.0" prefWidth="40.0" text="1">
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="scale" />
+               </children>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox prefHeight="16.0" prefWidth="442.0">
+               <children>
+                  <Text fx:id="output" strokeType="OUTSIDE" strokeWidth="0.0" text="mm" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="8.0" top="8.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="308.0">
+               <children>
+                  <Button fx:id="clipboard_button1" mnemonicParsing="false" onAction="#toClipboardRounded" text="To clipboard (rounded)" />
+                  <Button fx:id="clipboard_button2" mnemonicParsing="false" onAction="#toClipboard2DP" text="To clipboard (2 d.p.)">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="clipboard_button3" mnemonicParsing="false" onAction="#toClipboardExact" text="To clipboard (exact)">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+</BorderPane>
