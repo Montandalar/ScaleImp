@@ -18,42 +18,31 @@ public class Controller implements Initializable {
     @FXML
     public Controller controller;
     @FXML
-    public TextField ft;
+    public TextField real_ft;
     @FXML
-    public TextField in;
+    public TextField real_in;
     @FXML
-    public TextField numerator;
+    public TextField real_in_numerator;
     @FXML
-    public TextField denominator;
+    public TextField real_in_denominator;
     @FXML
     public TextField scale;
     @FXML
-    public Text output;
-
+    public TextField scale_in;
+    @FXML
+    public TextField scale_mm;
+    @FXML
+    public TextField real_mm;
+    @FXML
     public TextField fields[];
+    @FXML
+    public Text warn;
 
-    public double converted;
-    public long whole;
-
-    public double imperial2mm(double ft, double in, double a, double b) {
-        double result;
-        double FACTOR = 25.4;
-        result = FACTOR*12*ft;
-        result += FACTOR*in;
-        double fraction = a/b;
-        if (Double.isNaN(fraction) || Double.isInfinite(fraction)) {
-            return result;
-        }
-        result += FACTOR*fraction;
-        return result;
-    }
-    
-    public double imperial2mm(double[] a) {
-        return imperial2mm(a[0], a[1], a[2], a[3]);
-    }
+    private MeasurementModel model;
 
     public double parseField(TextField field) {
         String strFt = field.getCharacters().toString();
+        System.out.format("strFt = %s", strFt);
         if (strFt.isEmpty()) return 0;
         try {
             return Double.parseDouble(strFt);
@@ -62,52 +51,122 @@ public class Controller implements Initializable {
         }
     }
 
-    public void recalc() {
-        double parsedFields[] = new double[5];
+    public void recalcByRealImperial() {
+        double parsedFields[] = new double[4];
         double parsed;
-        for (int i = 0; i < 5; ++i) {
+        for (int i = 0; i < 4; ++i) {
             parsed = parseField(fields[i]);
             if (parsed < 0) {
-                output.setText("Invalid input.");
-                System.out.println();
+                warn.setText("Invalid input in imperial field #"+i); // TODO: Highlight the field that is wrong
                 return;
             }
             parsedFields[i] = parsed;
-            System.out.print(String.format("%f, ", parsedFields[i]));
         }
-        System.out.println();
-
-        this.converted = imperial2mm(parsedFields) / parsedFields[4];
-        this.whole = Math.round(converted);
-        output.setText(String.format("= %f / %d mm", converted, whole));
+        warn.setText("");
+        
+        System.out.format("parsedFields[0] = %f", parsedFields[0]);
+        model.updateByRealImperial(parsedFields[0], parsedFields[1],
+            parsedFields[2], parsedFields[3]);
+        redrawRealMetric();
+        redrawScaleImperial();
+        redrawScaleMetric();
     }
     
-    public void toClipboardCommon(String in) {
-        Toolkit.getDefaultToolkit()
-               .getSystemClipboard()
-               .setContents(new StringSelection(in), null);
+    public void recalcByScale() {
+        double parsed = parseField(scale);
+        if (parsed < 0) {
+            warn.setText("Invalid input in scale field");
+            return;
+        }
+        model.updateByScale(parsed);
+        redrawExceptScale();
     }
     
-    public void toClipboardExact() {
-        toClipboardCommon(String.format("%f", this.converted));
+    public void recalcByRealMetric() {
+        double parsed = parseField(real_mm);
+        if (parsed < 0) {
+            warn.setText("Invalid input in real mm field"); 
+            return;
+        }
+        model.updateByRealMetric(parsed);
+        redrawRealImp();
+        redrawScaleImperial();
+        redrawScaleMetric();
     }
     
-    public void toClipboard2DP() {
-        toClipboardCommon(String.format("%.2f", this.converted));
+    public void recalcByScaleImperial() {
+        double parsed = parseField(scale_in);
+        if (parsed < 0) {
+            warn.setText("Invalid input in scale in. field"); 
+            return;
+        }
+        model.updateByScaleImperial(parsed);
+        redrawRealImp();
+        redrawRealMetric();
+        redrawScaleMetric();
     }
     
-    public void toClipboardRounded() {
-        toClipboardCommon(String.format("%d", this.whole));
+    public void recalcByScaleMetric() {
+        double parsed = parseField(scale_mm);
+        if (parsed < 0) {
+            warn.setText("Invalid input in scale mm field"); 
+            return;
+        }
+        model.updateByScaleMetric(parsed);
+        redrawRealImp();
+        redrawRealMetric();
+        redrawScaleImperial();
+    }
+    
+    private String renderValue(double v) {
+        // Zero values should be omitted
+        if (v == 0) {
+            return "";
+        }
+        // Numbers with 1.000 (3 decimal places of zeroes) should be presented as integers.
+        long l = Math.round(v*1000);
+        if ((l % 1000) == 0) {
+            return String.format("%d", l/1000);
+        }
+        // All others should be represented to 3 decimal places.
+        return String.format("%.3f", v);
+    }
+    
+    private void redrawExceptScale() {
+        redrawRealImp();
+        redrawRealMetric();
+        redrawScaleImperial();
+        redrawScaleMetric();
+    }
+    
+    private void redrawRealImp() {
+        real_ft.setText(renderValue(model.real_ft));
+        real_in.setText(renderValue(model.real_in));
+        real_in_denominator.setText(renderValue(model.real_in_denominator));
+        real_in_numerator.setText(renderValue(model.real_in_numerator));
+    }
+    private void redrawRealMetric() {
+        real_mm.setText(renderValue(model.real_mm));
+    }
+    private void redrawScaleImperial() {
+        scale_in.setText(renderValue(model.scale_in));
+    }
+    private void redrawScaleMetric() {
+        scale_mm.setText(renderValue(model.scale_mm));
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.model = new MeasurementModel();
         this.controller = this;
-        this.fields = new TextField[5];
-        fields[0] = ft;
-        fields[1] = in;
-        fields[2] = numerator;
-        fields[3] = denominator;
+        this.fields = new TextField[8];
+        fields[0] = real_ft;
+        fields[1] = real_in;
+        fields[2] = real_in_numerator;
+        fields[3] = real_in_denominator;
         fields[4] = scale;
+        fields[5] = real_mm;
+        fields[6] = scale_in;
+        fields[7] = scale_mm;
     }
 }
