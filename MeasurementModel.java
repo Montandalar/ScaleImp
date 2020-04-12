@@ -111,7 +111,13 @@ public class MeasurementModel {
                 // Show thousandths only if there are no feet and inches
                 num = remainder / (FACTOR_IN/64);
                 num = floorWithUncertainty(num, 0.00001);
+                int intNum = (int) num;
                 denom = 64;
+                while ((intNum % 2) == 0) {
+                    intNum /= 2;
+                    denom /= 2;
+                }
+                num = intNum;
             }
             System.out.format("num = %f\n", num);
             System.out.format("denom = %f\n", denom);
