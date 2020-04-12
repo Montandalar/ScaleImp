@@ -104,7 +104,6 @@ public class MeasurementModel {
             double remainder = mm - mm_so_far;
             System.out.format("remainder = %f\n", remainder);
             assert remainder >= 0 : remainder;
-            remainder = floorWithUncertainty(remainder);
             if (remainder == 0) {
                 num = 0;
                 denom = 0;
