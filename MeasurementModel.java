@@ -46,11 +46,29 @@ public class MeasurementModel {
         return true;
     }
     
-    public boolean updateByScale(double newscale) {
+    public enum SourceUnit {
+        REAL_IMPERIAL, REAL_METRIC, SCALE_IMPERIAL, SCALE_METRIC, INVAL
+    }
+    
+    public boolean updateByScale(double newscale, SourceUnit sourceUnit) {
         this.scale = newscale;
-        this.scale_mm = real_mm / newscale;
-        this.scale_in = this.scale_mm / FACTOR_IN;
-        return true;
+        switch (sourceUnit) {
+            case REAL_IMPERIAL:
+                updateByRealImperial(real_ft, real_in,
+                real_in_numerator, real_in_denominator);
+                return true;
+            case REAL_METRIC:
+                updateByRealMetric(real_mm);
+                return true;
+            case SCALE_IMPERIAL:
+                updateByScaleImperial(scale_in);
+                return true;
+            case SCALE_METRIC:
+                updateByScaleMetric(scale_mm);
+                return true;
+            default:
+                return false;
+        }
     }
     
 

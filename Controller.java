@@ -11,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.Toggle;
 import javafx.scene.control.RadioButton;
 import javafx.scene.text.Text;
 
@@ -134,7 +135,22 @@ public class Controller implements Initializable {
             warn.setText("Invalid input in scale field");
             return;
         }
-        model.updateByScale(parsed);
+        Toggle source = sourceUnit.getSelectedToggle();
+        MeasurementModel.SourceUnit unit;
+        if (source == src_realft) {
+            unit = MeasurementModel.SourceUnit.REAL_IMPERIAL;
+        } else if (source == src_realmm) {
+            unit = MeasurementModel.SourceUnit.REAL_METRIC;
+        } else if (source == src_scalein) {
+            unit = MeasurementModel.SourceUnit.SCALE_IMPERIAL;
+        } else if (source == src_scalemm) {
+            unit = MeasurementModel.SourceUnit.SCALE_METRIC;
+        } else {
+            unit = MeasurementModel.SourceUnit.INVAL;
+            assert(false);
+        }
+        System.out.format("Update by scale: Source unit: %s\n", unit);
+        model.updateByScale(parsed, unit);
         redrawExceptScale();
     }
     
