@@ -45,11 +45,7 @@ public class MeasurementModel {
         
         return true;
     }
-    
-    public enum SourceUnit {
-        REAL_IMPERIAL, REAL_METRIC, SCALE_IMPERIAL, SCALE_METRIC, INVAL
-    }
-    
+
     public boolean updateByScale(double newscale, SourceUnit sourceUnit) {
         this.scale = newscale;
         switch (sourceUnit) {
@@ -70,7 +66,6 @@ public class MeasurementModel {
                 return false;
         }
     }
-    
 
     private class ImperialMeasurement {
         public double ft;

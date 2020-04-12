@@ -16,6 +16,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.text.Text;
 
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.KeyCode;
 import javafx.event.Event;
 import javafx.event.ActionEvent;
 
@@ -60,7 +61,7 @@ public class Controller implements Initializable {
     private MeasurementModel model;
 
     public void setSourceUnit(Event ev) {
-        RadioButton source = (RadioButton) ev.getSource();
+        RadioButton source = (RadioButton) sourceUnit.getSelectedToggle();
 
         for (int i = 0; i < 8; ++i) {
             fields[i].setEditable(false);
@@ -68,15 +69,19 @@ public class Controller implements Initializable {
         scale.setEditable(true);
 
         if (source == src_realft) {
+            System.out.println("Source unit set: realft");
             real_ft.setEditable(true);
             real_in.setEditable(true);
             real_in_numerator.setEditable(true);
             real_in_denominator.setEditable(true);
         } else if (source == src_realmm) {
+            System.out.println("Source unit set: realmm");
             real_mm.setEditable(true);
         } else if (source == src_scalein) {
+            System.out.println("Source unit set: scalein");
             scale_in.setEditable(true);
         } else if (source == src_scalemm) {
+            System.out.println("Source unit set: scalemm");
             scale_mm.setEditable(true);
         } else {
             assert(false);
@@ -85,13 +90,45 @@ public class Controller implements Initializable {
 
     public void radioButtonKeyPress(KeyEvent ke) {
         setSourceUnit(ke);
-        /*
-        RadioButton ns = (RadioButton) ke.getSource();
-        RadioButton nt = (RadioButton) ke.getTarget();
-        System.out.println("Radio button key press");
-        System.out.println(ns.isFocused());
-        System.out.println(nt.isFocused());
-        System.out.println(ns == nt);*/
+        KeyCode keyCode = ke.getCode();
+        int increment = 0;
+
+        if (!keyCode.isArrowKey()) {
+            return;
+        }
+
+        System.out.println(keyCode);
+        SourceUnit newUnit = SourceUnit.REAL_IMPERIAL;
+        RadioButton source = (RadioButton) sourceUnit.getSelectedToggle();
+        if (source == src_realft) {
+            newUnit = SourceUnit.REAL_IMPERIAL;
+        } else if (source == src_realmm) {
+            newUnit = SourceUnit.REAL_METRIC;
+        } else if (source == src_scalein) {
+            newUnit = SourceUnit.SCALE_IMPERIAL;
+        } else if (source == src_scalemm) {
+            newUnit = SourceUnit.SCALE_METRIC;
+        } else {
+            assert(false);
+        }
+
+        if (keyCode == KeyCode.DOWN || keyCode == KeyCode.RIGHT) {
+            newUnit = newUnit.next();
+        } else if (keyCode == KeyCode.UP || keyCode == KeyCode.LEFT) {
+            newUnit = newUnit.prev();
+        }
+
+        if (newUnit == SourceUnit.REAL_IMPERIAL) {
+            src_realft.fire();
+        } else if (newUnit == SourceUnit.REAL_METRIC) {
+            src_realmm.fire();
+        } else if (newUnit == SourceUnit.SCALE_IMPERIAL) {
+            src_scalein.fire();
+        } else if (newUnit == SourceUnit.SCALE_METRIC) {
+            src_scalemm.fire();
+        }
+        // Do not consume! The onAction event of setSourceUnit should fire.
+        //ke.consume();
     }
 
     public double parseField(TextField field) {
@@ -136,17 +173,17 @@ public class Controller implements Initializable {
             return;
         }
         Toggle source = sourceUnit.getSelectedToggle();
-        MeasurementModel.SourceUnit unit;
+        SourceUnit unit;
         if (source == src_realft) {
-            unit = MeasurementModel.SourceUnit.REAL_IMPERIAL;
+            unit = SourceUnit.REAL_IMPERIAL;
         } else if (source == src_realmm) {
-            unit = MeasurementModel.SourceUnit.REAL_METRIC;
+            unit = SourceUnit.REAL_METRIC;
         } else if (source == src_scalein) {
-            unit = MeasurementModel.SourceUnit.SCALE_IMPERIAL;
+            unit = SourceUnit.SCALE_IMPERIAL;
         } else if (source == src_scalemm) {
-            unit = MeasurementModel.SourceUnit.SCALE_METRIC;
+            unit = SourceUnit.SCALE_METRIC;
         } else {
-            unit = MeasurementModel.SourceUnit.INVAL;
+            unit = SourceUnit.INVAL;
             assert(false);
         }
         System.out.format("Update by scale: Source unit: %s\n", unit);
