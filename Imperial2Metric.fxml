@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -14,9 +16,14 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="345.0">
                <children>
-                  <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="303.0">
+                  <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="364.0">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Real ft">
+                        <RadioButton fx:id="src_realft" mnemonicParsing="false" onAction="#setSourceUnit" onKeyPressed="#radioButtonKeyPress" prefHeight="17.0" prefWidth="75.0" text="Real ft">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="sourceUnit" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0">
                            <HBox.margin>
                               <Insets right="2.0" />
                            </HBox.margin>
@@ -55,12 +62,12 @@
                   </HBox>
                   <HBox alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="218.0">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Scale in">
+                        <RadioButton fx:id="src_scalein" mnemonicParsing="false" onAction="#setSourceUnit" onKeyPressed="#radioButtonKeyPress" text="Scale in" toggleGroup="$sourceUnit">
                            <HBox.margin>
-                              <Insets right="10.0" />
+                              <Insets right="5.0" />
                            </HBox.margin>
-                        </Text>
-                        <TextField fx:id="scale_in" onKeyReleased="#recalcByScaleImperial" prefHeight="25.0" prefWidth="60.0" />
+                        </RadioButton>
+                        <TextField fx:id="scale_in" editable="false" onKeyReleased="#recalcByScaleImperial" prefHeight="25.0" prefWidth="60.0" />
                      </children>
                   </HBox>
                </children>
@@ -87,21 +94,21 @@
                <children>
                   <HBox alignment="CENTER" prefHeight="32.0" prefWidth="425.0">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Real mm">
+                        <RadioButton fx:id="src_realmm" mnemonicParsing="false" onAction="#setSourceUnit" onKeyPressed="#radioButtonKeyPress" text="Real mm" toggleGroup="$sourceUnit">
                            <HBox.margin>
-                              <Insets right="10.0" />
+                              <Insets right="5.0" />
                            </HBox.margin>
-                        </Text>
+                        </RadioButton>
                         <TextField fx:id="real_mm" onKeyReleased="#recalcByRealMetric" prefHeight="25.0" prefWidth="57.0" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER_RIGHT" prefHeight="16.0" prefWidth="442.0">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Scale mm">
+                        <RadioButton fx:id="src_scalemm" mnemonicParsing="false" onAction="#setSourceUnit" onKeyPressed="#radioButtonKeyPress" text="Scale mm" toggleGroup="$sourceUnit">
                            <HBox.margin>
-                              <Insets right="10.0" />
+                              <Insets right="5.0" />
                            </HBox.margin>
-                        </Text>
+                        </RadioButton>
                         <TextField fx:id="scale_mm" onKeyReleased="#recalcByScaleMetric" prefHeight="25.0" prefWidth="60.0" />
                      </children>
                   </HBox>

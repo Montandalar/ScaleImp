@@ -6,9 +6,17 @@ import java.awt.datatransfer.Clipboard;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.RadioButton;
 import javafx.scene.text.Text;
+
+import javafx.scene.input.KeyEvent;
+import javafx.event.Event;
+import javafx.event.ActionEvent;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -37,8 +45,53 @@ public class Controller implements Initializable {
     public TextField fields[];
     @FXML
     public Text warn;
+    @FXML
+    public ToggleGroup sourceUnit;
+    @FXML
+    public RadioButton src_realft;
+    @FXML
+    public RadioButton src_realmm;
+    @FXML
+    public RadioButton src_scalein;
+    @FXML
+    public RadioButton src_scalemm;
 
     private MeasurementModel model;
+
+    public void setSourceUnit(Event ev) {
+        RadioButton source = (RadioButton) ev.getSource();
+
+        for (int i = 0; i < 8; ++i) {
+            fields[i].setEditable(false);
+        }
+        scale.setEditable(true);
+
+        if (source == src_realft) {
+            real_ft.setEditable(true);
+            real_in.setEditable(true);
+            real_in_numerator.setEditable(true);
+            real_in_denominator.setEditable(true);
+        } else if (source == src_realmm) {
+            real_mm.setEditable(true);
+        } else if (source == src_scalein) {
+            scale_in.setEditable(true);
+        } else if (source == src_scalemm) {
+            scale_mm.setEditable(true);
+        } else {
+            assert(false);
+        }
+    }
+
+    public void radioButtonKeyPress(KeyEvent ke) {
+        setSourceUnit(ke);
+        /*
+        RadioButton ns = (RadioButton) ke.getSource();
+        RadioButton nt = (RadioButton) ke.getTarget();
+        System.out.println("Radio button key press");
+        System.out.println(ns.isFocused());
+        System.out.println(nt.isFocused());
+        System.out.println(ns == nt);*/
+    }
 
     public double parseField(TextField field) {
         String strFt = field.getCharacters().toString();
@@ -52,6 +105,9 @@ public class Controller implements Initializable {
     }
 
     public void recalcByRealImperial() {
+        if (!src_realft.isSelected()) {
+            return;
+        }
         double parsedFields[] = new double[4];
         double parsed;
         for (int i = 0; i < 4; ++i) {
@@ -83,6 +139,9 @@ public class Controller implements Initializable {
     }
     
     public void recalcByRealMetric() {
+        if (!src_realmm.isSelected()) {
+            return;
+        }
         double parsed = parseField(real_mm);
         if (parsed < 0) {
             warn.setText("Invalid input in real mm field"); 
@@ -95,6 +154,9 @@ public class Controller implements Initializable {
     }
     
     public void recalcByScaleImperial() {
+        if (!src_scalein.isSelected()) {
+            return;
+        }
         double parsed = parseField(scale_in);
         if (parsed < 0) {
             warn.setText("Invalid input in scale in. field"); 
@@ -107,6 +169,9 @@ public class Controller implements Initializable {
     }
     
     public void recalcByScaleMetric() {
+        if (!src_scalemm.isSelected()) {
+            return;
+        }
         double parsed = parseField(scale_mm);
         if (parsed < 0) {
             warn.setText("Invalid input in scale mm field"); 
@@ -168,5 +233,6 @@ public class Controller implements Initializable {
         fields[5] = real_mm;
         fields[6] = scale_in;
         fields[7] = scale_mm;
+        src_realft.fire();
     }
 }
