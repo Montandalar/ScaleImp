@@ -116,7 +116,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="525.0">
                <children>
-                  <Text fx:id="warn" strokeType="OUTSIDE" strokeWidth="0.0" text="Warnings go here" />
+                  <Text fx:id="warn" strokeType="OUTSIDE" strokeWidth="0.0" text="To start, select a source unit" />
                </children>
             </HBox>
          </children>
