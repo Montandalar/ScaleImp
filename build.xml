@@ -1,4 +1,4 @@
-<project>
+<project name="ScaleImp" default="jar">
     <target name="clean">
         <delete dir="classes" />
     </target>
