@@ -1,0 +1,27 @@
+<project>
+    <target name="clean">
+        <delete dir="classes" />
+    </target>
+
+    <target name="compile" depends="clean">
+        <mkdir dir="classes" />
+        <javac srcdir="src" destdir="classes" />
+    </target>
+
+    <target name="jar" depends="compile">
+        <jar destfile="ScaleImp.jar" basedir="classes">
+            <fileset dir=".">
+                <include name="ScaleImp.png" />
+                <include name="Imperial2Metric.fxml" />
+            </fileset>
+            <manifest>
+                <attribute name="Main-Class" 
+                  value="org.imperial2metric.Main" />
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="run" depends="jar">
+        <java jar="ScaleImp.jar" fork="true" />
+    </target>
+</project>
