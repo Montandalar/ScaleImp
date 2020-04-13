@@ -255,8 +255,13 @@ public class Controller implements Initializable {
         redrawRealMetric();
         redrawScaleImperial();
     }
-    
+
+    /// Render values to a default of 3 decimal places.
     private String renderValue(double v) {
+        return renderValue(v, 3);
+    }
+
+    private String renderValue(double v, int decimalPlaces) {
         // Zero values should be omitted
         if (v == 0) {
             return "";
@@ -266,17 +271,18 @@ public class Controller implements Initializable {
         if ((l % 1000) == 0) {
             return String.format("%d", l/1000);
         }
-        // All others should be represented to 3 decimal places.
-        return String.format("%.3f", v);
+        // All others should be represented to the specified precision.
+        String formatStr = String.format("%%.%df", decimalPlaces);
+        return String.format(formatStr, v);
     }
-    
+
     private void redrawExceptScale() {
         redrawRealImp();
         redrawRealMetric();
         redrawScaleImperial();
         redrawScaleMetric();
     }
-    
+
     private void redrawRealImp() {
         real_ft.setText(renderValue(model.real_ft));
         real_in.setText(renderValue(model.real_in));
@@ -284,13 +290,15 @@ public class Controller implements Initializable {
         real_in_numerator.setText(renderValue(model.real_in_numerator));
     }
     private void redrawRealMetric() {
-        real_mm.setText(renderValue(model.real_mm));
+        // No fraction part of real mm figures
+        real_mm.setText(renderValue(model.real_mm, 0)); 
     }
     private void redrawScaleImperial() {
         scale_in.setText(renderValue(model.scale_in));
     }
     private void redrawScaleMetric() {
-        scale_mm.setText(renderValue(model.scale_mm));
+        // Only 2 d.p. of scale mm figures - any smaller is too small for most instruments.
+        scale_mm.setText(renderValue(model.scale_mm, 2));
     }
 
     @Override
