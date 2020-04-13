@@ -103,8 +103,9 @@ public class MeasurementModel {
             System.out.format("mm_so_far = %f\n", mm_so_far);
             double remainder = mm - mm_so_far;
             System.out.format("remainder = %f\n", remainder);
-            assert remainder >= 0 : remainder;
-            if (remainder == 0) {
+            //assert remainder >= 0 : remainder;
+            // A small negative remainder may occur if ft/in were rounded up due to uncertainty
+            if (remainder <= 0) {
                 num = 0;
                 denom = 0;
             } else {
@@ -112,8 +113,12 @@ public class MeasurementModel {
                 num = remainder / (FACTOR_IN/64);
                 num = floorWithUncertainty(num, 0.00001);
                 int intNum = (int) num;
+                if (intNum == 0) {
+                    return;
+                }
                 denom = 64;
-                while ((intNum % 2) == 0) {
+                while ((intNum % 2) == 0 && intNum != 0) {
+                    System.out.format("intNum = %d / denom = %f\n", intNum, denom);
                     intNum /= 2;
                     denom /= 2;
                 }
