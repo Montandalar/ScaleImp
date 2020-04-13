@@ -57,6 +57,8 @@ public class Controller implements Initializable {
     public RadioButton src_scalein;
     @FXML
     public RadioButton src_scalemm;
+    @FXML
+    public Button buttonClear;
 
     private MeasurementModel model;
 
@@ -67,6 +69,7 @@ public class Controller implements Initializable {
             fields[i].setEditable(false);
         }
         scale.setEditable(true);
+        buttonClear.setDisable(true);
 
         if (source == src_realft) {
             System.out.println("Source unit set: realft");
@@ -74,6 +77,7 @@ public class Controller implements Initializable {
             real_in.setEditable(true);
             real_in_numerator.setEditable(true);
             real_in_denominator.setEditable(true);
+            buttonClear.setDisable(false);
         } else if (source == src_realmm) {
             System.out.println("Source unit set: realmm");
             real_mm.setEditable(true);
@@ -89,7 +93,6 @@ public class Controller implements Initializable {
     }
 
     public void radioButtonKeyPress(KeyEvent ke) {
-        setSourceUnit(ke);
         KeyCode keyCode = ke.getCode();
         int increment = 0;
 
@@ -131,6 +134,23 @@ public class Controller implements Initializable {
         //ke.consume();
     }
 
+
+    public void clearImperialInputByKeyPress(KeyEvent ke) {
+        if (ke.getCode() == KeyCode.ENTER) {
+            clearImperialInput();
+        }
+    }
+
+    public void clearImperialInput() {
+        System.out.println("clearImperialInput");
+        real_ft.setText("");
+        real_in.setText("");
+        real_in_denominator.setText("");
+        real_in_numerator.setText("");
+        real_ft.requestFocus();
+        recalcByRealImperial();
+    }
+
     public double parseField(TextField field) {
         String strFt = field.getCharacters().toString();
         System.out.format("strFt = %s", strFt);
@@ -165,7 +185,7 @@ public class Controller implements Initializable {
         redrawScaleImperial();
         redrawScaleMetric();
     }
-    
+
     public void recalcByScale() {
         double parsed = parseField(scale);
         if (parsed < 0) {

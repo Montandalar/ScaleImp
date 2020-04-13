@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
@@ -10,15 +11,15 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="144.0" prefWidth="451.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.imperial2metric.Controller">
+<BorderPane prefHeight="144.0" prefWidth="481.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.imperial2metric.Controller">
    <center>
       <VBox prefHeight="68.0" prefWidth="417.0">
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="345.0">
                <children>
-                  <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="364.0">
+                  <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="446.0">
                      <children>
-                        <RadioButton fx:id="src_realft" mnemonicParsing="false" onAction="#setSourceUnit" onKeyPressed="#radioButtonKeyPress" prefHeight="17.0" prefWidth="75.0" text="Real ft">
+                        <RadioButton fx:id="src_realft" mnemonicParsing="false" onAction="#setSourceUnit" onKeyPressed="#radioButtonKeyPress" prefHeight="17.0" prefWidth="57.0" text="Real ft">
                            <toggleGroup>
                               <ToggleGroup fx:id="sourceUnit" />
                            </toggleGroup>
@@ -28,18 +29,18 @@
                               <Insets right="2.0" />
                            </HBox.margin>
                         </Text>
-                        <TextField fx:id="real_ft" onKeyReleased="#recalcByRealImperial" prefHeight="25.0" prefWidth="40.0">
+                        <TextField fx:id="real_ft" onKeyReleased="#recalcByRealImperial" prefHeight="25.0" prefWidth="44.0">
                            <HBox.margin>
                               <Insets left="5.0" />
                            </HBox.margin>
                         </TextField>
-                        <TextField fx:id="real_in" onKeyReleased="#recalcByRealImperial" prefHeight="25.0" prefWidth="40.0">
+                        <TextField fx:id="real_in" onKeyReleased="#recalcByRealImperial" prefHeight="25.0" prefWidth="31.0">
                            <HBox.margin>
                               <Insets left="3.0" right="5.0" />
                            </HBox.margin>
                         </TextField>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="in" />
-                        <TextField fx:id="real_in_numerator" onKeyReleased="#recalcByRealImperial" prefHeight="25.0" prefWidth="40.0">
+                        <TextField fx:id="real_in_numerator" onKeyReleased="#recalcByRealImperial" prefHeight="25.0" prefWidth="31.0">
                            <HBox.margin>
                               <Insets right="5.0" />
                            </HBox.margin>
@@ -52,27 +53,31 @@
                               <Insets left="5.0" />
                            </HBox.margin>
                         </Text>
-                        <TextField fx:id="real_in_denominator" onKeyReleased="#recalcByRealImperial" prefHeight="25.0" prefWidth="40.0">
+                        <TextField fx:id="real_in_denominator" onKeyReleased="#recalcByRealImperial" prefHeight="25.0" prefWidth="31.0">
                            <HBox.margin>
                               <Insets left="5.0" right="5.0" />
                            </HBox.margin>
                         </TextField>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="fraction" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="fraction">
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin></Text>
+                        <Button fx:id="buttonClear" mnemonicParsing="false" onAction="#clearImperialInput" onKeyPressed="#clearImperialInputByKeyPress" text="C" />
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="218.0">
+                  <HBox alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="273.0">
                      <children>
                         <RadioButton fx:id="src_scalein" mnemonicParsing="false" onAction="#setSourceUnit" onKeyPressed="#radioButtonKeyPress" text="Scale in" toggleGroup="$sourceUnit">
                            <HBox.margin>
                               <Insets right="5.0" />
                            </HBox.margin>
                         </RadioButton>
-                        <TextField fx:id="scale_in" editable="false" onKeyReleased="#recalcByScaleImperial" prefHeight="25.0" prefWidth="60.0" />
+                        <TextField fx:id="scale_in" editable="false" onKeyReleased="#recalcByScaleImperial" prefHeight="25.0" prefWidth="57.0" />
                      </children>
                   </HBox>
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="62.0" prefWidth="525.0">
+            <HBox alignment="CENTER" prefHeight="25.0" prefWidth="444.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1:">
                      <HBox.margin>
@@ -116,7 +121,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="525.0">
                <children>
-                  <Text fx:id="warn" strokeType="OUTSIDE" strokeWidth="0.0" text="To start, select a source unit" />
+                  <Text fx:id="warn" strokeType="OUTSIDE" strokeWidth="0.0" text="Warnings go here" />
                </children>
             </HBox>
          </children>
