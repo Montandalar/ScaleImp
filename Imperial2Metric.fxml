@@ -29,18 +29,18 @@
                               <Insets right="2.0" />
                            </HBox.margin>
                         </Text>
-                        <TextField fx:id="real_ft" onKeyReleased="#recalcByRealImperial" prefHeight="25.0" prefWidth="44.0">
+                        <TextField fx:id="real_ft" onKeyPressed="#inputFieldKeyPress" onKeyReleased="#recalcByRealImperial" onKeyTyped="#keyTypedHandle" prefHeight="25.0" prefWidth="44.0">
                            <HBox.margin>
                               <Insets left="5.0" />
                            </HBox.margin>
                         </TextField>
-                        <TextField fx:id="real_in" onKeyReleased="#recalcByRealImperial" prefHeight="25.0" prefWidth="31.0">
+                        <TextField fx:id="real_in" onKeyPressed="#inputFieldKeyPress" onKeyReleased="#recalcByRealImperial" onKeyTyped="#keyTypedHandle" prefHeight="25.0" prefWidth="31.0">
                            <HBox.margin>
                               <Insets left="3.0" right="5.0" />
                            </HBox.margin>
                         </TextField>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="in" />
-                        <TextField fx:id="real_in_numerator" onKeyReleased="#recalcByRealImperial" prefHeight="25.0" prefWidth="31.0">
+                        <TextField fx:id="real_in_numerator" onKeyPressed="#inputFieldKeyPress" onKeyReleased="#recalcByRealImperial" onKeyTyped="#keyTypedHandle" prefHeight="25.0" prefWidth="31.0">
                            <HBox.margin>
                               <Insets right="5.0" />
                            </HBox.margin>
@@ -53,7 +53,7 @@
                               <Insets left="5.0" />
                            </HBox.margin>
                         </Text>
-                        <TextField fx:id="real_in_denominator" onKeyReleased="#recalcByRealImperial" prefHeight="25.0" prefWidth="31.0">
+                        <TextField fx:id="real_in_denominator" onKeyPressed="#inputFieldKeyPress" onKeyReleased="#recalcByRealImperial" onKeyTyped="#keyTypedHandle" prefHeight="25.0" prefWidth="31.0">
                            <HBox.margin>
                               <Insets left="5.0" right="5.0" />
                            </HBox.margin>
@@ -72,7 +72,7 @@
                               <Insets right="5.0" />
                            </HBox.margin>
                         </RadioButton>
-                        <TextField fx:id="scale_in" editable="false" onKeyReleased="#recalcByScaleImperial" prefHeight="25.0" prefWidth="57.0" />
+                        <TextField fx:id="scale_in" editable="false" onKeyPressed="#inputFieldKeyPress" onKeyReleased="#recalcByScaleImperial" onKeyTyped="#keyTypedHandle" prefHeight="25.0" prefWidth="57.0" />
                      </children>
                   </HBox>
                </children>
@@ -104,7 +104,7 @@
                               <Insets right="5.0" />
                            </HBox.margin>
                         </RadioButton>
-                        <TextField fx:id="real_mm" onKeyReleased="#recalcByRealMetric" prefHeight="25.0" prefWidth="57.0" />
+                        <TextField fx:id="real_mm" onKeyPressed="#inputFieldKeyPress" onKeyReleased="#recalcByRealMetric" onKeyTyped="#keyTypedHandle" prefHeight="25.0" prefWidth="57.0" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER_RIGHT" prefHeight="16.0" prefWidth="442.0">
@@ -114,14 +114,14 @@
                               <Insets right="5.0" />
                            </HBox.margin>
                         </RadioButton>
-                        <TextField fx:id="scale_mm" onKeyReleased="#recalcByScaleMetric" prefHeight="25.0" prefWidth="60.0" />
+                        <TextField fx:id="scale_mm" onKeyPressed="#inputFieldKeyPress" onKeyReleased="#recalcByScaleMetric" onKeyTyped="#keyTypedHandle" prefHeight="25.0" prefWidth="60.0" />
                      </children>
                   </HBox>
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="525.0">
                <children>
-                  <Text fx:id="warn" strokeType="OUTSIDE" strokeWidth="0.0" text="Warnings go here" />
+                  <Text fx:id="warn" strokeType="OUTSIDE" strokeWidth="0.0" text="Select source unit with the radio buttons" />
                </children>
             </HBox>
          </children>

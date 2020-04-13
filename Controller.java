@@ -60,6 +60,8 @@ public class Controller implements Initializable {
     @FXML
     public Button buttonClear;
 
+    private boolean eatNextKeyTyped;
+
     private MeasurementModel model;
 
     public void setSourceUnit(Event ev) {
@@ -162,6 +164,36 @@ public class Controller implements Initializable {
         }
     }
 
+    /// Keycodes must first be marked as valid or not in KeyPress event;
+    /// however they cannot be consumed here.
+    public void inputFieldKeyPress(KeyEvent ke) {
+        KeyCode kc = ke.getCode();
+        System.out.println(kc);
+        if (!(kc.isDigitKey()
+            || kc.isArrowKey()
+            || kc.isModifierKey()
+            || kc == KeyCode.PERIOD
+            || kc == KeyCode.ENTER
+            || kc == KeyCode.BACK_SPACE
+            || kc == KeyCode.TAB
+            || kc == KeyCode.HOME
+            || kc == KeyCode.END
+            || ke.isControlDown()
+            || ke.isAltDown()
+            )) {
+            eatNextKeyTyped = true;
+        } else {
+            eatNextKeyTyped = false;
+        }
+    }
+
+    /// Will eat events that were marked invalid by inputFieldKeyPress.
+    public void keyTypedHandle(KeyEvent ke) {
+        if (eatNextKeyTyped) {
+            ke.consume();
+        }
+    }
+
     public void recalcByRealImperial() {
         if (!src_realft.isSelected()) {
             return;
@@ -186,7 +218,7 @@ public class Controller implements Initializable {
         redrawScaleMetric();
     }
 
-    public void recalcByScale() {
+    public void recalcByScale(KeyEvent ke) {
         double parsed = parseField(scale);
         if (parsed < 0) {
             warn.setText("Invalid input in scale field");
@@ -211,7 +243,7 @@ public class Controller implements Initializable {
         redrawExceptScale();
     }
     
-    public void recalcByRealMetric() {
+    public void recalcByRealMetric(KeyEvent ke) {
         if (!src_realmm.isSelected()) {
             return;
         }
@@ -226,7 +258,7 @@ public class Controller implements Initializable {
         redrawScaleMetric();
     }
     
-    public void recalcByScaleImperial() {
+    public void recalcByScaleImperial(KeyEvent ke) {
         if (!src_scalein.isSelected()) {
             return;
         }
@@ -241,7 +273,7 @@ public class Controller implements Initializable {
         redrawScaleMetric();
     }
     
-    public void recalcByScaleMetric() {
+    public void recalcByScaleMetric(KeyEvent ke) {
         if (!src_scalemm.isSelected()) {
             return;
         }
