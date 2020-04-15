@@ -173,6 +173,7 @@ public class Controller implements Initializable {
             || kc.isArrowKey()
             || kc.isModifierKey()
             || kc == KeyCode.PERIOD
+            || kc == KeyCode.DECIMAL
             || kc == KeyCode.ENTER
             || kc == KeyCode.BACK_SPACE
             || kc == KeyCode.TAB
