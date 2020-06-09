@@ -17,8 +17,7 @@ To the right of the *Real ft* inputs you will see a little button with a 'C' on 
 
 ## Installation
 ScaleImp is a Java 8 program. Download it it from the GitHub releases section. You will need to install the
-[Java Runtime Environment](https://www.oracle.com/java/technologies/javase-jre8-downloads.html) from Oracle.
-
+[Java Runtime Environment](https://java.com/en/download/) from Oracle.
 ### Developers
 
 Use [Apache Ant](https://ant.apache.org/) to build the software.
